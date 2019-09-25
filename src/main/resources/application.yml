@@ -7,7 +7,7 @@ spring:
     password: root
 
 server:
-  port: 8888
+  port: 6666
 #  设置访问后台的访问路径
 #   address: 172.20.10.2
 
