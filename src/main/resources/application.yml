@@ -1,0 +1,22 @@
+# DataSource Config
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://172.20.10.9:3306/hammer
+    username: root
+    password: root
+
+server:
+  port: 8888
+#  设置访问后台的访问路径
+#   address: 172.20.10.2
+
+logging:
+  level:
+    com:
+      jdh:
+        ecommerce:
+          dao: debug
+
+mybatis-plus:
+  mapper-locations: /mapper/*.xml

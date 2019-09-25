@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jdh.ecommerce.dao.HammerOrderDetailDao">
+
+    <resultMap id="order" type="com.jdh.ecommerce.bean.OrderDetailDto">
+        <result column="hdId" property="id"></result>
+        <result column="order_id" property="orderId"></result>
+        <result column="product_id" property="productId"></result>
+        <result column="cost" property="cost"></result>
+        <result column="quantity" property="quantity"></result>
+        <collection property="list" ofType="com.jdh.ecommerce.entity.HammerProductEntity">
+            <result column="product_id" property="id"></result>
+            <result column="product_name" property="productName"></result>
+            <result column="product_img" property="productImg"></result>
+            <result column="product_repertory" property="productRepertory"></result>
+            <result column="is_delete" property="isDelete"></result>
+            <result column="title" property="title"></result>
+            <result column="price" property="price"></result>
+        </collection>
+    </resultMap>
+
+    <select id="selOrderDetail" resultMap="order">
+        SELECT hd.id hdId,hd.order_id,hd.quantity,hd.product_id,hd.cost,hp.* from hammer_order_detail hd,hammer_product hp
+        where hd.product_id=hp.id and hd.order_id = #{orderId}
+    </select>
+
+</mapper>

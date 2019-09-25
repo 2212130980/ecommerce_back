@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jdh.ecommerce.dao.HammerOrderDao">
+
+    <resultMap id="order" type="com.jdh.ecommerce.bean.OrderDto">
+        <result column="hoId" property="id"></result>
+        <result column="hoCost" property="cost"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="user_name" property="userName"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="user_address" property="userAddress"></result>
+        <result column="order_number" property="orderNumber"></result>
+        <result column="phone" property="phone"></result>
+        <result column="pay_status" property="payStatus"></result>
+        <result column="logistics_status" property="logisticsStatus"></result>
+        <collection property="orderDetailDtoList" ofType="com.jdh.ecommerce.bean.OrderDetailDto"
+          select="com.jdh.ecommerce.dao.HammerOrderDetailDao.selOrderDetail" column="hoId">
+            <result column="hdId" property="id"></result>
+            <result column="order_id" property="orderId"></result>
+            <result column="product_id" property="productId"></result>
+            <result column="cost" property="cost"></result>
+            <result column="quantity" property="quantity"></result>
+            <collection property="list" ofType="com.jdh.ecommerce.entity.HammerProductEntity">
+                <result column="product_id" property="id"></result>
+                <result column="product_name" property="productName"></result>
+                <result column="product_img" property="productImg"></result>
+                <result column="product_repertory" property="productRepertory"></result>
+                <result column="is_delete" property="isDelete"></result>
+                <result column="title" property="title"></result>
+                <result column="price" property="price"></result>
+            </collection>
+        </collection>
+    </resultMap>
+
+
+    <select id="selOrderDto" resultMap="order">
+        select  ho.id hoId,ho.cost hoCost,ho.user_id,ho.user_name,
+          ho.create_time,ho.user_address,ho.order_number,ho.phone,
+          ho.pay_status,ho.logistics_status from hammer_order ho
+          where ho.user_id=#{userId} order by ho.create_time desc
+    </select>
+
+
+
+</mapper>

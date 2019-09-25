@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jdh.ecommerce.dao.HammerCartsDao">
+
+    <resultMap id="Cart" type="com.jdh.ecommerce.bean.CartDto">
+        <result column="hcId" property="id"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="product_id" property="productId"></result>
+        <result column="cart_num" property="cartNum"></result>
+        <collection property="hammerProductEntities" ofType="com.jdh.ecommerce.entity.HammerProductEntity">
+            <result column="product_id" property="id"></result>
+            <result column="product_name" property="productName"></result>
+            <result column="product_img" property="productImg"></result>
+            <result column="product_repertory" property="productRepertory"></result>
+            <result column="is_delete" property="isDelete"></result>
+            <result column="title" property="title"></result>
+            <result column="price" property="price"></result>
+        </collection>
+
+    </resultMap>
+
+    <select id="selMyCart" resultMap="Cart">
+        select hc.id hcId,hc.user_id,hc.product_id,hc.cart_num,hp.* from hammer_carts hc,hammer_product hp
+        where hc.product_id = hp.id and hc.user_id=#{id}
+        <if test="cartId != null and cartId.length != 0">
+            and hc.id in
+            <foreach collection="cartId" item="cartId" index="index"
+                     open="(" close=")" separator=",">
+                #{cartId}
+            </foreach>
+        </if>
+    </select>
+
+</mapper>
